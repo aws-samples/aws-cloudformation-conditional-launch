@@ -1,0 +1,11 @@
+[
+  {
+    "ParameterKey": "S3BucketName",
+    "ParameterValue": "$[taskcat_autobucket]"
+  },
+  {
+    "ParameterKey": "S3KeyPrefix",
+    "ParameterValue": "blog-conditional-launch/"
+  }
+]
+

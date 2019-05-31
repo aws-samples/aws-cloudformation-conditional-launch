@@ -1,0 +1,33 @@
+---
+global:
+  owner: tonynv@amazon.com
+  qsname: blog-conditional-launch
+  regions:
+    - ap-northeast-1
+    - ap-northeast-2
+    - ap-southeast-1
+    - ap-southeast-2
+    - eu-central-1
+    - eu-west-1
+    - sa-east-1
+    - us-east-1
+    - us-west-1
+    - us-west-2
+  reporting: true
+tests:
+  option-enable:
+    parameter_input: enable_conditional_stack.template.json
+    template_file: conditional_stack_example.template.yaml
+    regions:
+    - us-west-1
+  option-disable:
+    parameter_input: disable_conditional_stack.template.json
+    template_file: conditional_stack_example.template.yaml
+    regions:
+    - us-west-1
+  template-url-rewrite:
+    parameter_input: templateurl_rewitre_example.template.json
+    template_file: templateurl_rewitre_example.template.yaml
+    regions:
+    - us-west-1
+

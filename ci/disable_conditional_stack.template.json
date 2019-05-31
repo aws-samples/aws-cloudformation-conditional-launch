@@ -1,0 +1,35 @@
+[
+  {
+    "ParameterKey": "GitHubUser",
+    "ParameterValue": "avattathil"
+  },
+  {
+    "ParameterKey": "GitHubRepoName",
+    "ParameterValue": "blog-conditional-launch"
+  },
+  {
+    "ParameterKey": "SourceRepoBranch",
+    "ParameterValue": "develop"
+  },
+  {
+    "ParameterKey": "ReleaseBranch",
+    "ParameterValue": "master"
+  },
+  {
+    "ParameterKey": "GitHubOAuthToken",
+    "ParameterValue": "use_override_file"
+  },
+  {
+    "ParameterKey": "EnableCIPipeline",
+    "ParameterValue": "false"
+  },
+  {
+    "ParameterKey": "QSS3BucketName",
+    "ParameterValue": "$[taskcat_autobucket]"
+  },
+  {
+    "ParameterKey": "QSS3KeyPrefix",
+    "ParameterValue": "blog-conditional-launch/"
+  }
+]
+
