@@ -1,0 +1,81 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Conditional Launch Example (qs-tb1p1t01)"
+Metadata:
+  LICENSE: Apache License Version 2.0
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+         default: Staging Bucket
+         Parameters:
+          - QSS3BucketName
+      - Label:
+          default: Enable CI (optional)
+          Parameters:
+          - EnableCIPipeline
+          - ReleaseBranch
+          - SourceRepoBranch
+          - GitHubUser
+          - GitHubRepoName
+          - GitHubOAuthToken
+          - QSS3KeyPrefix
+Parameters:
+  EnableCIPipeline: 
+    AllowedValues: 
+      - 'true'
+      - 'false'
+    Default: 'false'
+    Description: "If true deploy taskcat ci pipeline"
+    Type: String
+  GitHubUser:
+    Description: Enter GitHub username of the repository owner
+    Type: String
+  GitHubRepoName:
+    Description: Enter the repository name that should be monitored for changes
+    Type: String
+  SourceRepoBranch:
+    Description: Enter the branch name to be monitored
+    Type: String
+  ReleaseBranch:
+    Description: >-
+      Enter the release branch name. On successfull build, above branch will be
+      merged into this branch.
+    Type: String
+  GitHubOAuthToken:
+    Description: >-
+      Create a token with 'repo' and 'admin:repo_hook' permissions here
+      https://github.com/settings/tokens
+    Type: String
+    NoEcho: 'true'
+  QSS3BucketName:
+    AllowedPattern: "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$"
+    Default: avattathil
+    Description: "Default s3 bucket (Must be a valid bucket name)"
+    Type: String
+  QSS3KeyPrefix:
+    AllowedPattern: "^[0-9a-zA-Z-/]*$"
+    Default: blog-conditional-launch/
+    Description: "s3 prefix must end with forward slash (/)."
+    Type: String
+Conditions:
+  EnableTaskcatCI: !Equals
+    - !Ref EnableCIPipeline
+    - 'true'
+Resources:
+  LambdaRandomStringStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/lambda_random_string.template.yaml
+  CIStack:
+    Condition: EnableTaskcatCI
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://aws-quickstart.s3.amazonaws.com/quickstart-taskcat-ci/templates/taskcat-ci-pipeline.template
+      Parameters:
+        QSS3BucketName: 'aws-quickstart'
+        QSS3KeyPrefix: 'quickstart-taskcat-ci/'
+        GitHubUser: !Ref GitHubUser
+        GitHubRepoName: !Ref GitHubRepoName
+        GitHubOAuthToken: !Ref GitHubOAuthToken
+        ReleaseBranch: !Ref ReleaseBranch
+        SourceRepoBranch: !Ref SourceRepoBranch
+
