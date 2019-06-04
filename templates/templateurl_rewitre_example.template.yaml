@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Re-Write TemplateURL based on user input (qs-tb1p2t01)"
+Metadata:
+  LICENSE: Apache License Version 2.0
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Staging Bucket
+        Parameters:
+          - S3BucketName
+          - S3KeyPrefix
+      - Label:
+          default: Application Version
+        Parameters:
+          - SelectLicenseType
+Parameters:
+  SelectLicenseType: 
+    AllowedValues: 
+      - 'opensource'
+      - 'commercial'
+    Default: 'opensource'
+    Description: "Use opensource or commercial version"
+    Type: String
+  S3BucketName:
+    AllowedPattern: "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$"
+    Default: avattathil
+    Description: "Default s3 bucket (Must be a valid bucket name)"
+    Type: String
+  S3KeyPrefix:
+    AllowedPattern: "^[0-9a-zA-Z-/]*$"
+    Default: blog-conditional-launch/
+    Description: "s3 prefix must end with forward slash (/)."
+    Type: String
+Conditions:
+  UseVendored: !Equals
+    - !Ref SelectLicenseType
+    - 'commercial'
+Resources:
+  ApplicationStackStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 
+        !Sub 
+        - https://${DynamicTemplateLocation}
+        - DynamicTemplateLocation:
+           !If
+           - UseVendored
+           - vendor-bucket.s3.amazonaws.com/path-to-vendored-dist/commercial-version.template.yaml
+           - !Sub ${S3BucketName}.s3.amazonaws.com/${S3KeyPrefix}templates/opensource-version-example.template.yaml
