@@ -19,15 +19,15 @@ tests:
     parameter_input: enable_conditional_stack.template.json
     template_file: conditional_stack_example.template.yaml
     regions:
-    - us-west-1
+    - us-west-2
   option-disable:
     parameter_input: disable_conditional_stack.template.json
     template_file: conditional_stack_example.template.yaml
     regions:
-    - us-west-1
+    - us-west-2
   template-url-rewrite:
-    parameter_input: templateurl_rewitre_example.template.json
-    template_file: templateurl_rewitre_example.template.yaml
+    parameter_input: conditional_templateurl_example.template.json
+    template_file:  conditional_templateurl_example.template.yaml
     regions:
-    - us-west-1
+    - us-west-2
 
