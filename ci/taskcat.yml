@@ -1,7 +1,7 @@
 ---
 global:
   owner: tonynv@amazon.com
-  qsname: blog-conditional-launch
+  qsname: aws-cloudformation-conditional-launch 
   regions:
     - ap-northeast-1
     - ap-northeast-2

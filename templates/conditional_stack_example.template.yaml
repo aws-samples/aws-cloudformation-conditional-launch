@@ -53,7 +53,7 @@ Parameters:
     Type: String
   QSS3KeyPrefix:
     AllowedPattern: "^[0-9a-zA-Z-/]*$"
-    Default: blog-conditional-launch/
+    Default: aws-cloudformation-conditional-launch/
     Description: "s3 prefix must end with forward slash (/)."
     Type: String
 Conditions:

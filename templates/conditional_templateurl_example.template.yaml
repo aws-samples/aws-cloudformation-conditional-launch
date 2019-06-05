@@ -12,14 +12,14 @@ Metadata:
       - Label:
           default: Application Version
         Parameters:
-          - SelectLicenseType
+          - DeploymentType
 Parameters:
-  SelectLicenseType: 
+  DeploymentType: 
     AllowedValues: 
-      - 'opensource'
-      - 'commercial'
-    Default: 'opensource'
-    Description: "Use opensource or commercial version"
+      - 'development'
+      - 'production'
+    Default: 'development'
+    Description: "Use development or production version"
     Type: String
   S3BucketName:
     AllowedPattern: "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$"
@@ -28,13 +28,13 @@ Parameters:
     Type: String
   S3KeyPrefix:
     AllowedPattern: "^[0-9a-zA-Z-/]*$"
-    Default: blog-conditional-launch/
+    Default: aws-cloudformation-conditional-launch/
     Description: "s3 prefix must end with forward slash (/)."
     Type: String
 Conditions:
   UseVendored: !Equals
-    - !Ref SelectLicenseType
-    - 'commercial'
+    - !Ref DeploymentType
+    - 'production'
 Resources:
   ApplicationStackStack:
     Type: AWS::CloudFormation::Stack
@@ -45,5 +45,5 @@ Resources:
         - DynamicTemplateLocation:
            !If
            - UseVendored
-           - vendor-bucket.s3.amazonaws.com/path-to-vendored-dist/commercial-version.template.yaml
-           - !Sub ${S3BucketName}.s3.amazonaws.com/${S3KeyPrefix}templates/opensource-version-example.template.yaml
+           - vendor-bucket.s3.amazonaws.com/path-to-vendored-dist/production-version.template.yaml
+           - !Sub ${S3BucketName}.s3.amazonaws.com/${S3KeyPrefix}templates/development-version-example.template.yaml
