@@ -29,7 +29,7 @@
   },
   {
     "ParameterKey": "QSS3KeyPrefix",
-    "ParameterValue": "blog-conditional-launch/"
+    "ParameterValue": "aws-cloudformation-conditional-launch/"
   }
 ]
 
