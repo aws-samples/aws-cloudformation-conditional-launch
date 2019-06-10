@@ -1,7 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: "Re-Write TemplateURL based on user input (qs-tb1p2t01)"
 Metadata:
-  LICENSE: Apache License Version 2.0
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:

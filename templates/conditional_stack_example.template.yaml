@@ -1,23 +1,22 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: "Conditional Launch Example (qs-tb1p1t01)"
 Metadata:
-  LICENSE: Apache License Version 2.0
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
-         default: Staging Bucket
-         Parameters:
-          - QSS3BucketName
-      - Label:
           default: Enable CI (optional)
-          Parameters:
-          - EnableCIPipeline
-          - ReleaseBranch
-          - SourceRepoBranch
-          - GitHubUser
-          - GitHubRepoName
-          - GitHubOAuthToken
-          - QSS3KeyPrefix
+        Parameters:
+            - EnableCIPipeline
+            - ReleaseBranch
+            - SourceRepoBranch
+            - GitHubUser
+            - GitHubRepoName
+            - GitHubOAuthToken
+      - Label:
+         default: Staging Bucket
+        Parameters:
+           - QSS3BucketName
+           - QSS3KeyPrefix
 Parameters:
   EnableCIPipeline: 
     AllowedValues: 
